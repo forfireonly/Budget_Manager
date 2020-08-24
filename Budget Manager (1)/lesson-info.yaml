@@ -1,0 +1,9 @@
+type: framework
+custom_name: Budget Manager
+content:
+- Count my money
+- Make a menu
+- Oh the things you can buy
+- Memorable purchases
+- Analyzer
+current_task: 0
