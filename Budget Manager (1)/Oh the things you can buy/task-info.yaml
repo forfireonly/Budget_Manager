@@ -308,6 +308,179 @@ files:
         }
     }
   learner_created: false
+- name: src/budget/Menu.java
+  visible: true
+  text: |
+    package budget;
+
+    import java.util.Scanner;
+
+    public class Menu {
+
+        double budget;
+        Purchases newPurchase = new Purchases();
+        static Scanner budgetScanner = new Scanner(System.in);
+
+
+        public enum MenuChoicesForBudget {
+            ONE ("1) Add income"),
+            TWO ("2) Add purchase"),
+            THREE ("3) Show list of purchases"),
+            FOUR ("4) Balance"),
+            ZERO ("0) Exit");
+
+            String menuDescription;
+
+            MenuChoicesForBudget(String menuDescription) {
+                this.menuDescription = menuDescription;
+            }
+        }
+
+        public void displayMenu() {
+            System.out.println("Choose your action:");
+            for (MenuChoicesForBudget yourChoice : MenuChoicesForBudget.values()) {
+                System.out.println(yourChoice.menuDescription);
+            }
+        }
+
+        public void addIncome() {
+
+            System.out.println("Enter income:");
+            budget =+ budgetScanner.nextInt();
+            System.out.println("Income was added!");
+        }
+
+        public void addPurchase() {
+            newPurchase.createList();
+            budget = budget - newPurchase.purchaseCost;
+        }
+
+        public void showListOfPurchases() {
+            newPurchase.calculateTotal();
+            newPurchase.displayListAndTotal();
+        }
+
+        public void displayBalance() {
+            System.out.println("Balance: $" + budget);
+
+        }
+
+        public static void runMenu() {
+            Menu menu = new Menu();
+            menu.displayMenu();
+            int choice = budgetScanner.nextInt();
+            while (choice != 0) {
+                switch (choice) {
+                    case 1:
+                        System.out.println();
+                        menu.addIncome();
+                        System.out.println();
+                        break;
+                    case 2:
+                        System.out.println();
+                        menu.addPurchase();
+                        System.out.println();
+                        break;
+                    case 3:
+                        System.out.println();
+                        menu.showListOfPurchases();
+                        System.out.println();
+                        break;
+                    case 4:
+                        System.out.println();
+                        menu.displayBalance();
+                        System.out.println();
+                        break;
+                    default:
+                        System.out.println("Please enter the correct choice");
+
+                }
+                menu.displayMenu();
+                choice = budgetScanner.nextInt();
+                //budgetScanner.nextLine();
+            }
+            System.out.println();
+            System.out.println("Bye!");
+            System.exit(0);
+        }
+    }
+  learner_created: true
+- name: src/budget/Purchases.java
+  visible: true
+  text: |
+    package budget;
+
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Scanner;
+
+    public class Purchases {
+        List<Item> listOfPurchases = new ArrayList<>();
+        Scanner scn = new Scanner(System.in);
+        Double total = 0.0;
+        Double purchaseCost = 0.0;
+
+        public static class Item {
+            String itemName;
+            double price;
+
+            public Item(String itemName, double price) {
+                this.itemName = itemName;
+                this.price = price;
+            }
+
+        }
+
+
+        public void createList() {
+                System.out.println("Enter purchase name");
+                String itemName = scn.nextLine();
+                System.out.println("Enter its price");
+                double price = scn.nextDouble();
+                scn.nextLine();
+                purchaseCost = price;
+                Item item = new Item(itemName, price);
+                listOfPurchases.add(item);
+                System.out.println("Purchase was added!");
+
+        }
+
+        static double processString(String singlePurchase) {
+            String amountString = singlePurchase.substring(singlePurchase.indexOf('$') + 1);
+            return Double.parseDouble(amountString);
+        }
+
+        public void calculateTotal () {
+
+            for (Item purchase : listOfPurchases) {
+                total += purchase.price;
+            }
+        }
+
+        public void displayListAndTotal() {
+            if (listOfPurchases.size() == 0) {
+                System.out.println("Purchase list is empty");
+            } else {
+                for (Item purchase : listOfPurchases) {
+                    System.out.println(purchase.itemName + " $" + purchase.price);
+                }
+                System.out.printf("Total: $%.2f%n", total);
+            }
+        }
+
+        public static void showTotal() {
+            Purchases myList = new Purchases();
+            myList.createList();
+            myList.calculateTotal();
+           // myList.displayTotal();
+        }
+
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/76/stages/423/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/76/stages/423/implement">JetBrains
+    Academy</a>
+  time: Thu, 27 Aug 2020 20:22:44 UTC
 record: -1

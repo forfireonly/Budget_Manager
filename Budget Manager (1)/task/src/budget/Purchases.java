@@ -1,14 +1,10 @@
 package budget;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.IOException;
+import static budget.Main.*;
+
 
 public class Purchases {
-    List<Item> listOfPurchases = new ArrayList<>();
-    Scanner scn = new Scanner(System.in);
-    Double total = 0.0;
-    Double purchaseCost = 0.0;
 
     public static class Item {
         String itemName;
@@ -22,15 +18,33 @@ public class Purchases {
     }
 
 
-    public void createList() {
+    public void createList(int choice) throws IOException {
             System.out.println("Enter purchase name");
-            String itemName = scn.nextLine();
+            String itemName = reader.readLine();
             System.out.println("Enter its price");
-            double price = scn.nextDouble();
-            scn.nextLine();
+            double price = Double.parseDouble(reader.readLine());
+
             purchaseCost = price;
             Item item = new Item(itemName, price);
             listOfPurchases.add(item);
+            switch (choice) {
+                case 1:
+                    foodList.add(item);
+                    break;
+                case 2:
+                    clothesList.add(item);
+                    break;
+                case 3:
+                    entertainmentList.add(item);
+                    break;
+                case 4:
+                    otherList.add(item);
+                    break;
+                case 5:
+                    break;
+                default:
+                    System.out.println("Please, enter valid choice");
+            }
             System.out.println("Purchase was added!");
 
     }
@@ -40,29 +54,121 @@ public class Purchases {
         return Double.parseDouble(amountString);
     }
 
-    public void calculateTotal () {
+    public void calculateTotal (int choice) {
 
-        for (Item purchase : listOfPurchases) {
-            total += purchase.price;
+        switch (choice) {
+            case 1:
+                for (Item purchase : foodList) {
+                      totalFood += purchase.price;
+                    total += purchase.price;
+                    }
+                break;
+            case 2:
+                for (Item purchase : clothesList) {
+                    totalClothes += purchase.price;
+                    total += purchase.price;
+                }
+                break;
+            case 3:
+                for (Item purchase : entertainmentList) {
+                    totalEntertainment += purchase.price;
+                    total += purchase.price;
+                }
+                break;
+            case 4:
+                for (Item purchase : entertainmentList) {
+                    totalOther += purchase.price;
+                    total += purchase.price;
+                }
+                break;
+            case 5:
+
+                break;
+            case 6:
+                break;
+
+            default:
+
+
+
         }
     }
 
-    public void displayListAndTotal() {
-        if (listOfPurchases.size() == 0) {
-            System.out.println("Purchase list is empty");
-        } else {
-            for (Item purchase : listOfPurchases) {
-                System.out.println(purchase.itemName + " $" + purchase.price);
+    public void displayListAndTotal(int choice) {
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Food:");
+                    if (foodList.size() == 0) {
+                        System.out.println("Purchase list is Empty");
+                    } else {
+                        for (Item purchase : foodList) {
+                            //System.out.println("Total $" + calculateTotal(choice));
+                            System.out.println(purchase.itemName + " $" + purchase.price);
+                        }
+                    }
+                    calculateTotal(choice);
+                    System.out.printf("Total sum: $%.2f%n", totalFood);
+                    break;
+                case 2:
+                    System.out.println("Clothes:");
+                    if (clothesList.size() == 0) {
+                        System.out.println("Purchase list is Empty");
+                    } else {
+                        for (Item purchase : clothesList) {
+                            System.out.println(purchase.itemName + " $" + purchase.price);
+                        }
+                    }
+                    calculateTotal(choice);
+                    System.out.printf("Total sum: $%.2f%n", totalClothes);
+                    break;
+                case 3:
+                    System.out.println("Entertainment:");
+                    if (entertainmentList.size() == 0) {
+                        System.out.println("Purchase list is Empty");
+                    } else {
+                        for (Item purchase : entertainmentList) {
+                            System.out.println(purchase.itemName + " $" + purchase.price);
+                        }
+
+                        calculateTotal(choice);
+                        System.out.printf("Total sum: $%.2f%n", totalEntertainment);
+                    }
+                    break;
+                case 4:
+                    System.out.println("Other:");
+                    if (otherList.size() == 0) {
+                        System.out.println("Purchase list is Empty");
+                    } else {
+                        for (Item purchase : otherList) {
+                            System.out.println(purchase.itemName + " $" + purchase.price);
+                        }
+
+                        calculateTotal(choice);
+                        System.out.printf("Total sum: $%.2f%n", totalOther);
+                    }
+                    break;
+                case 5:
+                    System.out.println("All:");
+                    if (listOfPurchases.size() == 0) {
+                        System.out.println("Purchase list is Empty");
+                    } else {
+                        for (Item purchase : listOfPurchases) {
+                            System.out.println(purchase.itemName + " $" + purchase.price);
+
+                            calculateTotal(choice);
+                            System.out.printf("Total sum: $%.2f%n", total);
+                        }
+                        break;
+                    }
             }
-            System.out.printf("Total: $%.2f%n", total);
-        }
     }
 
-    public static void showTotal() {
+    /*public static void showTotal() {
         Purchases myList = new Purchases();
         myList.createList();
         myList.calculateTotal();
        // myList.displayTotal();
-    }
+    }*/
 
 }
