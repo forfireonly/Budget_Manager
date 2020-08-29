@@ -1,0 +1,5 @@
+Budget---955.0
+Food---Plain milk---5.0---Dark chocolate---5.0---Chicken sandwich---5.0---
+Clothes---Fur hats---5.0---Long socks---5.0---
+Entertainment---Scary movie---5.0---Funny show---5.0---
+Other---Pink soap---5.0---Hair shampoo---5.0---

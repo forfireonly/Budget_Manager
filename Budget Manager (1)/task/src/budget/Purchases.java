@@ -1,8 +1,8 @@
 package budget;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import static budget.Main.*;
-
 
 public class Purchases {
 
@@ -14,17 +14,16 @@ public class Purchases {
             this.itemName = itemName;
             this.price = price;
         }
-
     }
-
 
     public void createList(int choice) throws IOException {
             System.out.println("Enter purchase name");
             String itemName = reader.readLine();
             System.out.println("Enter its price");
             double price = Double.parseDouble(reader.readLine());
+            budget -= price;
 
-            purchaseCost = price;
+            purchaseCost += price;
             Item item = new Item(itemName, price);
             listOfPurchases.add(item);
             switch (choice) {
@@ -60,28 +59,27 @@ public class Purchases {
             case 1:
                 for (Item purchase : foodList) {
                       totalFood += purchase.price;
-                    total += purchase.price;
                     }
                 break;
             case 2:
                 for (Item purchase : clothesList) {
                     totalClothes += purchase.price;
-                    total += purchase.price;
                 }
                 break;
             case 3:
                 for (Item purchase : entertainmentList) {
                     totalEntertainment += purchase.price;
-                    total += purchase.price;
                 }
                 break;
             case 4:
                 for (Item purchase : entertainmentList) {
                     totalOther += purchase.price;
-                    total += purchase.price;
                 }
                 break;
             case 5:
+                for (Item purchase : listOfPurchases) {
+                    total += purchase.price;
+                }
 
                 break;
             case 6:
@@ -89,12 +87,11 @@ public class Purchases {
 
             default:
 
-
-
         }
     }
 
     public void displayListAndTotal(int choice) {
+        DecimalFormat df = new DecimalFormat("0.00");
 
             switch (choice) {
                 case 1:
@@ -104,11 +101,14 @@ public class Purchases {
                     } else {
                         for (Item purchase : foodList) {
                             //System.out.println("Total $" + calculateTotal(choice));
-                            System.out.println(purchase.itemName + " $" + purchase.price);
+                            System.out.println(purchase.itemName + " $" + df.format(purchase.price));
                         }
+
+                        totalFood = 0;
+                        calculateTotal(choice);
+                        System.out.printf("Total sum: $%.2f%n", totalFood);
                     }
-                    calculateTotal(choice);
-                    System.out.printf("Total sum: $%.2f%n", totalFood);
+
                     break;
                 case 2:
                     System.out.println("Clothes:");
@@ -116,11 +116,13 @@ public class Purchases {
                         System.out.println("Purchase list is Empty");
                     } else {
                         for (Item purchase : clothesList) {
-                            System.out.println(purchase.itemName + " $" + purchase.price);
+                            System.out.println(purchase.itemName + " $" + df.format(purchase.price));
                         }
+                        totalClothes = 0;
+                        calculateTotal(choice);
+                        System.out.printf("Total sum: $%.2f%n", totalClothes);
                     }
-                    calculateTotal(choice);
-                    System.out.printf("Total sum: $%.2f%n", totalClothes);
+
                     break;
                 case 3:
                     System.out.println("Entertainment:");
@@ -128,9 +130,10 @@ public class Purchases {
                         System.out.println("Purchase list is Empty");
                     } else {
                         for (Item purchase : entertainmentList) {
-                            System.out.println(purchase.itemName + " $" + purchase.price);
+                            System.out.println(purchase.itemName + " $" + df.format(purchase.price));
                         }
 
+                        totalEntertainment = 0;
                         calculateTotal(choice);
                         System.out.printf("Total sum: $%.2f%n", totalEntertainment);
                     }
@@ -141,7 +144,7 @@ public class Purchases {
                         System.out.println("Purchase list is Empty");
                     } else {
                         for (Item purchase : otherList) {
-                            System.out.println(purchase.itemName + " $" + purchase.price);
+                            System.out.println(purchase.itemName + " $" + df.format(purchase.price));
                         }
 
                         calculateTotal(choice);
@@ -154,8 +157,10 @@ public class Purchases {
                         System.out.println("Purchase list is Empty");
                     } else {
                         for (Item purchase : listOfPurchases) {
-                            System.out.println(purchase.itemName + " $" + purchase.price);
+                            System.out.println(purchase.itemName + " $" + df.format(purchase.price));
 
+                        }
+                            total = 0;
                             calculateTotal(choice);
                             System.out.printf("Total sum: $%.2f%n", total);
                         }
@@ -171,4 +176,5 @@ public class Purchases {
        // myList.displayTotal();
     }*/
 
-}
+
+

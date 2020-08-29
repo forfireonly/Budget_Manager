@@ -5,14 +5,13 @@ import static budget.Main.*;
 
 public class Menu {
 
-    double budget;
-    Purchases newPurchase = new Purchases();
-
     public enum MenuChoicesForBudget {
         ONE ("1) Add income"),
         TWO ("2) Add purchase"),
         THREE ("3) Show list of purchases"),
         FOUR ("4) Balance"),
+        FIVE ("5) Save"),
+        SIX ("6) Load"),
         ZERO ("0) Exit");
 
         String menuDescription;
@@ -57,13 +56,11 @@ public class Menu {
 
     public void addIncome() throws IOException {
         System.out.println("Enter income:");
-        budget =+ Integer.parseInt(reader.readLine());
+        budget = budget + Double.parseDouble(reader.readLine());
         System.out.println("Income was added!");
     }
 
     public void displayBalance() {
         System.out.println("Balance: $" + budget);
-
     }
-
 }
