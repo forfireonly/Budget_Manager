@@ -1,18 +1,28 @@
 package budget;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import static budget.Main.*;
 
 public class Purchases {
 
-    public static class Item {
+    public static class Item implements Comparable<Item>{
         String itemName;
         double price;
 
+        public Double getPrice () {
+            return this.price;
+        }
         public Item(String itemName, double price) {
             this.itemName = itemName;
             this.price = price;
+        }
+
+        @Override
+        public int compareTo(@NotNull Item item) {
+            return this.getPrice().compareTo(item.getPrice());
         }
     }
 
@@ -53,26 +63,58 @@ public class Purchases {
         return Double.parseDouble(amountString);
     }
 
+    public void createListOfCategoriesAndTotals() {
+        totalFood = 0;
+        totalClothes = 0;
+        totalEntertainment = 0;
+        totalOther = 0;
+        for (Item purchase : foodList) {
+            totalFood += purchase.price;
+        }
+        Item food = new Item("Food", totalFood);
+        listOfCategories.add(food);
+        for (Item purchase : clothesList) {
+            totalClothes += purchase.price;
+        }
+        Item clothes = new Item("Clothes", totalClothes);
+        listOfCategories.add(clothes);
+        for (Item purchase : entertainmentList) {
+            totalEntertainment += purchase.price;
+        }
+        Item entertainment = new Item("Entertainment", totalEntertainment);
+        listOfCategories.add(entertainment);
+        for (Item purchase : otherList) {
+            totalOther += purchase.price;
+        }
+        Item other = new Item("Other", totalOther);
+        listOfCategories.add(other);
+
+    }
+
     public void calculateTotal (int choice) {
 
         switch (choice) {
             case 1:
+                totalFood = 0;
                 for (Item purchase : foodList) {
                       totalFood += purchase.price;
                     }
                 break;
             case 2:
+                totalClothes = 0;
                 for (Item purchase : clothesList) {
                     totalClothes += purchase.price;
                 }
                 break;
             case 3:
+                totalEntertainment = 0;
                 for (Item purchase : entertainmentList) {
                     totalEntertainment += purchase.price;
                 }
                 break;
             case 4:
-                for (Item purchase : entertainmentList) {
+                totalOther = 0;
+                for (Item purchase : otherList) {
                     totalOther += purchase.price;
                 }
                 break;
@@ -91,7 +133,7 @@ public class Purchases {
     }
 
     public void displayListAndTotal(int choice) {
-        DecimalFormat df = new DecimalFormat("0.00");
+
 
             switch (choice) {
                 case 1:
@@ -100,7 +142,6 @@ public class Purchases {
                         System.out.println("Purchase list is Empty");
                     } else {
                         for (Item purchase : foodList) {
-                            //System.out.println("Total $" + calculateTotal(choice));
                             System.out.println(purchase.itemName + " $" + df.format(purchase.price));
                         }
 

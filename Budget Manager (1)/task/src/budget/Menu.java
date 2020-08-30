@@ -12,6 +12,7 @@ public class Menu {
         FOUR ("4) Balance"),
         FIVE ("5) Save"),
         SIX ("6) Load"),
+        SEVEN("7) Analyze (Sort)"),
         ZERO ("0) Exit");
 
         String menuDescription;
@@ -23,6 +24,27 @@ public class Menu {
 
     String[] typesOfPurchasesList = {"1) Food", "2) Clothes", "3) Entertainment", "4) Other", "5) Back"};
     String[] typesOfDisplayedLists = {"1) Food", "2) Clothes", "3) Entertainment", "4) Other", "5) All", "6) Back"};
+    String[] sortingWays = {"1) Sort all purchases", "2) Sort by type", "3) Sort certain type", "4) back"};
+    String[] typesOfPurchasesToSort = {"1) Food", "2) Clothes", "3) Entertainment", "4) Other"};
+
+    public void displayPurchasesForSorting() {
+        System.out.println();
+        System.out.println("Choose the type of purchase");
+
+        for (String choice : typesOfPurchasesToSort) {
+            System.out.println(choice);
+        }
+    }
+
+    public void displaySortingWays() {
+        System.out.println();
+        System.out.println("How do you want to sort?");
+
+        for (String choice : sortingWays) {
+            System.out.println(choice);
+        }
+
+    }
 
     //display menu for purchases
     public void displayPurchasesOption() {

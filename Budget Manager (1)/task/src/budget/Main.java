@@ -1,7 +1,9 @@
 package budget;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +21,10 @@ public class Main {
     static List<Purchases.Item> entertainmentList = new ArrayList<>();
     static List<Purchases.Item> otherList = new ArrayList<>();
     static List<Purchases.Item> listOfPurchases = new ArrayList<>();
+    static List<Purchases.Item> listOfCategories = new ArrayList<>();
     static double budget;
+
+    static DecimalFormat df = new DecimalFormat("0.00");
 
 
     static Menu myMenu = new Menu();
@@ -178,6 +183,85 @@ public class Main {
 
 
 
+                    break;
+
+                case 7:
+                    myMenu.displaySortingWays();
+                    currentChoice = Integer.parseInt(reader.readLine());
+                    while (currentChoice != 4) {
+                        System.out.println();
+                        switch (currentChoice) {
+                            case 1:
+                                if (listOfPurchases.size() == 0) {
+                                    System.out.println("Purchase list is empty!");
+                                } else {
+                                    listOfPurchases.sort(Collections.reverseOrder());
+                                    System.out.println();
+                                    myPurchase.displayListAndTotal(5);
+                                }
+                                break;
+                            case 2:
+                                myPurchase.createListOfCategoriesAndTotals();
+                                listOfCategories.sort(Collections.reverseOrder());
+                                for (Purchases.Item purchase : listOfCategories) {
+                                    System.out.println(purchase.itemName + " - $" + df.format(purchase.price));
+                                }
+
+                                break;
+                            case 3:
+                                myMenu.displayPurchasesForSorting();
+                                choice = Integer.parseInt(reader.readLine());
+                                System.out.println();
+                                switch (choice) {
+                                    case 1:
+                                        if (foodList.size() == 0) {
+                                            System.out.println("Purchase list is empty!");
+                                        } else {
+                                            foodList.sort(Collections.reverseOrder());
+                                            System.out.println();
+                                            myPurchase.displayListAndTotal(choice);
+                                        }
+                                        break;
+                                    case 2:
+                                        if (clothesList.size() == 0) {
+                                            System.out.println("Purchase list is empty!");
+                                        } else {
+                                            clothesList.sort(Collections.reverseOrder());
+                                            System.out.println();
+                                            myPurchase.displayListAndTotal(choice);
+                                        }
+                                        break;
+                                    case 3:
+                                        if (entertainmentList.size() == 0) {
+                                            System.out.println("Purchase list is empty!");
+                                        } else {
+                                            entertainmentList.sort(Collections.reverseOrder());
+                                            System.out.println();
+                                            myPurchase.displayListAndTotal(choice);
+                                        }
+                                        break;
+                                    case 4:
+                                        if (otherList.size() == 0) {
+                                            System.out.println("Purchase list is empty!");
+                                        } else {
+                                            otherList.sort(Collections.reverseOrder());
+                                            System.out.println();
+                                            myPurchase.displayListAndTotal(choice);
+                                        }
+                                        break;
+                                    default:
+                                }
+                                break;
+                            default:
+
+                        }
+                        myMenu.displaySortingWays();
+                        currentChoice = Integer.parseInt(reader.readLine());
+
+
+                    }
+
+                    System.out.println();
                     break;
                 default:
                     System.out.println("Please enter the correct choice");
